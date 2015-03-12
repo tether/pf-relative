@@ -1,0 +1,44 @@
+{
+  "name": "pf-relative",
+  "version": "1.0.0",
+  "description": "Angular Live Relative Time",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "jshint lib/**.js",
+    "build": "npm run build.min; browserify lib/index.js > dist/pf-relative.js",
+    "build.min": "mkdir -p dist; browserify lib/index.js | uglifyjs -m -c sequences=true,dead_code=true,conditionals=true,booleans=true,unused=true,if_return=true,join_vars=true,drop_console=true > dist/pf-relative.min.js",
+    "prebuild": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:PetroFeed/pf-relative.git"
+  },
+  "keywords": [
+    "angular",
+    "ng",
+    "live",
+    "refresh",
+    "relative",
+    "time",
+    "ago",
+    "timeago",
+    "petrofeed",
+    "petro",
+    "feed"
+  ],
+  "author": "PetroFeed Inc.",
+  "license": "Creative Commons Attribution 4.0 International",
+  "bugs": {
+    "url": "https://github.com/PetroFeed/pf-relative/issues"
+  },
+  "homepage": "https://github.com/PetroFeed/pf-relative",
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "jshint": "^2.6.3",
+    "milliseconds": "^1.0.3",
+    "object-extend": "^0.5.0",
+    "strftime": "^0.8.4",
+    "timeago": "^0.2.0",
+    "uglify-js": "^2.4.16"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "pf-relative",
+  "version": "1.0.0",
+  "authors": [
+    "PetroFeed Inc."
+  ],
+  "description": "Angular Live Relative Time",
+  "main": "dist/pf-relative.min.js",
+  "keywords": [
+    "angular",
+    "ng",
+    "live",
+    "refresh",
+    "relative",
+    "time",
+    "ago",
+    "timeago",
+    "petrofeed",
+    "petro",
+    "feed"
+  ],
+  "license": "Creative Commons Attribution 4.0 International",
+  "homepage": "https://github.com/PetroFeed/pf-relative",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
