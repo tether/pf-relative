@@ -12,6 +12,9 @@ angular.module('pf-relative', [])
     var relative = new RelativeDate(scope.date);
     element.attr('datetime', scope.date);
     relative.onTick(element.text.bind(element));
+
+    scope.$watch('date', relative.setDate);
+    element.on('$destroy', relative.destroy);
   };
 
   return directive;
@@ -90,12 +93,26 @@ var noop = function noop () {};
 
 module.exports = function RelativeDate (date) {
   if (!(this instanceof RelativeDate)) return new RelativeDate(date);
-  date = date ? new Date(date) : new Date();
 
+  var lastTick = null;
   var listener = noop;
+
   this.onTick = function onTick (newListener) {
     listener = newListener;
   };
+
+  this.setDate = function setDate (newDate) {
+    date = newDate ? new Date(newDate) : new Date();
+    tick();
+  };
+
+  this.destroy = function destroy () {
+    clearTick();
+  };
+
+  function clearTick () {
+    clearTimeout(lastTick);
+  }
 
   function tick () {
     var diff = Date.now() - date.getTime();
@@ -104,11 +121,14 @@ module.exports = function RelativeDate (date) {
     var relative = madeCutoff ? strftime(options.cutoffFormat, date) : timeAgo(date);
     var nextTick = madeCutoff ? null : refreshRate(diff);
 
-    listener.call(this, relative);
-    if (nextTick) setTimeout(tick, nextTick);
+    listener(relative);
+    clearTick();
+    if (nextTick) {
+      lastTick = setTimeout(tick, nextTick);
+    }
   }
 
-  setTimeout(tick, 0);
+  this.setDate(date);
 };
 
 },{"./options":3,"./refresh.rate":4,"strftime":8,"timeago":9}],6:[function(require,module,exports){
