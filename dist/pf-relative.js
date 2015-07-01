@@ -14,7 +14,7 @@ angular.module('pf-relative', [])
     relative.onTick(element.text.bind(element));
 
     scope.$watch('date', relative.setDate);
-    element.on('$destroy', relative.clearTick);
+    element.on('$destroy', relative.destroy);
   };
 
   return directive;
@@ -106,11 +106,13 @@ module.exports = function RelativeDate (date) {
     tick();
   };
 
+  this.destroy = function destroy () {
+    clearTick();
+  };
+
   function clearTick () {
     clearTimeout(lastTick);
   }
-
-  this.clearTick = clearTick;
 
   function tick () {
     var diff = Date.now() - date.getTime();
@@ -119,7 +121,7 @@ module.exports = function RelativeDate (date) {
     var relative = madeCutoff ? strftime(options.cutoffFormat, date) : timeAgo(date);
     var nextTick = madeCutoff ? null : refreshRate(diff);
 
-    listener.call(this, relative);
+    listener(relative);
     clearTick();
     if (nextTick) {
       lastTick = setTimeout(tick, nextTick);
